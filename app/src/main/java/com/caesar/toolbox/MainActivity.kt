@@ -1,0 +1,40 @@
+package com.caesar.toolbox
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.*
+import com.caesar.toolbox.data.UpdateChecker
+import com.caesar.toolbox.ui.theme.CaesarTBTheme
+import kotlinx.coroutines.launch
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            CaesarTBTheme {
+                var updateInfo by remember { mutableStateOf<UpdateChecker.UpdateInfo?>(null) }
+                val scope = rememberCoroutineScope()
+
+                // 启动时自动检查更新
+                LaunchedEffect(Unit) {
+                    scope.launch {
+                        val info = UpdateChecker.check()
+                        if (info.hasUpdate) updateInfo = info
+                    }
+                }
+
+                CaesarTBApp(
+                    updateInfo = updateInfo,
+                    onDismissUpdate = { updateInfo = null },
+                    onDownload = { url ->
+                        UpdateChecker.openDownload(this@MainActivity, url)
+                        updateInfo = null
+                    }
+                )
+            }
+        }
+    }
+}

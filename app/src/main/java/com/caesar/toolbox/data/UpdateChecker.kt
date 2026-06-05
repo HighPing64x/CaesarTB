@@ -13,23 +13,27 @@ import java.net.URL
 /**
  * GitHub Pages 更新检查器
  *
- * 预期在 GitHub Pages 部署一个 version.json：
- * {
- *   "versionName": "1.0.1",
- *   "versionCode": 2,
- *   "downloadUrl": "https://github.com/xxx/CaesarTB/releases/latest"
- * }
+ * version.json 格式见项目根目录 version.sample.json
  */
 object UpdateChecker {
 
     // TODO: 替换为你的 GitHub Pages 地址
     private const val VERSION_URL =
-        "https://YOUR_USERNAME.github.io/CaesarTB/version.json"
+        "https://HighPing64x.github.io/CaesarTB/version.json"
+
+    data class Changelog(
+        val newFeatures: List<String> = emptyList(),
+        val changed: List<String> = emptyList(),
+        val removed: List<String> = emptyList(),
+        val fixed: List<String> = emptyList()
+    )
 
     data class UpdateInfo(
         val hasUpdate: Boolean,
         val latestVersion: String,
-        val downloadUrl: String?
+        val downloadUrl: String?,
+        val updateTime: String = "",
+        val changelog: Changelog = Changelog()
     )
 
     suspend fun check(): UpdateInfo = withContext(Dispatchers.IO) {
@@ -47,13 +51,32 @@ object UpdateChecker {
 
             val remoteVersion = obj.optString("versionName", "")
             val downloadUrl = obj.optString("downloadUrl", "")
+            val updateTime = obj.optString("updateTime", "")
+
+            // 解析 changelog
+            val changelogJson = obj.optJSONObject("changelog")
+            val changelog = if (changelogJson != null) {
+                Changelog(
+                    newFeatures = changelogJson.optJSONArray("new")?.let { arr ->
+                        (0 until arr.length()).map { arr.getString(it) }
+                    } ?: emptyList(),
+                    changed = changelogJson.optJSONArray("changed")?.let { arr ->
+                        (0 until arr.length()).map { arr.getString(it) }
+                    } ?: emptyList(),
+                    removed = changelogJson.optJSONArray("removed")?.let { arr ->
+                        (0 until arr.length()).map { arr.getString(it) }
+                    } ?: emptyList(),
+                    fixed = changelogJson.optJSONArray("fixed")?.let { arr ->
+                        (0 until arr.length()).map { arr.getString(it) }
+                    } ?: emptyList()
+                )
+            } else Changelog()
 
             val hasUpdate = remoteVersion.isNotEmpty() &&
                     remoteVersion != BuildConfig.VERSION_NAME
 
-            UpdateInfo(hasUpdate, remoteVersion, downloadUrl.ifEmpty { null })
+            UpdateInfo(hasUpdate, remoteVersion, downloadUrl.ifEmpty { null }, updateTime, changelog)
         } catch (_: Exception) {
-            // 网络不通/地址错误 — 静默失败
             UpdateInfo(false, "", null)
         }
     }

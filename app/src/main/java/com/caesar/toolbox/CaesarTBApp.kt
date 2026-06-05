@@ -3,12 +3,13 @@ package com.caesar.toolbox
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavType
@@ -137,25 +138,50 @@ fun CaesarTBApp(
             onDismissRequest = onDismissUpdate,
             containerColor = MaterialTheme.colorScheme.surface,
             title = {
-                Text(
-                    "发现新版本",
-                    fontWeight = FontWeight.Bold
-                )
+                Text("发现新版本", fontWeight = FontWeight.Bold)
             },
             text = {
-                Column {
-                    Text("当前版本：${BuildConfig.VERSION_NAME}")
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        "最新版本：${updateInfo.latestVersion}",
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        "是否前往下载？",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                Column(
+                    modifier = Modifier
+                        .heightIn(max = 380.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    // 版本对比
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text("当前", style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(BuildConfig.VERSION_NAME, fontWeight = FontWeight.Medium)
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text("最新", style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(updateInfo.latestVersion,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold)
+                    }
+
+                    // 更新时间
+                    if (updateInfo.updateTime.isNotEmpty()) {
+                        Text("更新时间：${updateInfo.updateTime}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f))
+                    }
+
+                    // 更新日志
+                    val log = updateInfo.changelog
+                    if (log.newFeatures.isNotEmpty() || log.changed.isNotEmpty() ||
+                        log.removed.isNotEmpty() || log.fixed.isNotEmpty()
+                    ) {
+                        Divider(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant
+                        )
+                        ChangelogSection("\u2728 新增", log.newFeatures)
+                        ChangelogSection("\uD83D\uDD27 修改", log.changed)
+                        ChangelogSection("\uD83D\uDDD1 删除", log.removed)
+                        ChangelogSection("\uD83D\uDC1B 修复", log.fixed)
+                    }
                 }
             },
             confirmButton = {
@@ -171,5 +197,24 @@ fun CaesarTBApp(
                 }
             }
         )
+    }
+}
+
+// ========== 更新日志条目 ==========
+
+@Composable
+private fun ChangelogSection(title: String, items: List<String>) {
+    if (items.isEmpty()) return
+    Column(modifier = Modifier.padding(top = 2.dp)) {
+        Text(title, style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface)
+        items.forEach { item ->
+            Text(
+                text = "  • $item",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }

@@ -43,6 +43,13 @@ object ToolRegistry {
             category = ToolCategory.UTILITY
         ),
         Tool(
+            id = "game_2048",
+            name = "2048",
+            description = "经典数字合成游戏，滑动合并",
+            icon = Icons.Outlined.GridOn,
+            category = ToolCategory.UTILITY
+        ),
+        Tool(
             id = "placeholder_text",
             name = "文本工具",
             description = "编码转换、格式化等文本处理",

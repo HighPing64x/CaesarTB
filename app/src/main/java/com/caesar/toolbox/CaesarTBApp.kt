@@ -113,6 +113,9 @@ fun CaesarTBApp(
                         "test_lab" -> TestLabScreen(
                             onBack = { navController.popBackStack() }
                         )
+                        "game_2048" -> Game2048Screen(
+                            onBack = { navController.popBackStack() }
+                        )
                         else -> ToolDetailScreen(
                             toolId = toolId,
                             onBack = { navController.popBackStack() }

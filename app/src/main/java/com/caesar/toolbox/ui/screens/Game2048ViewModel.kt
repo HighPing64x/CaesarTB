@@ -104,7 +104,10 @@ class Game2048ViewModel(context: Context) : ViewModel() {
             merged.addAll(mg)
         }
 
-        if (!moved) return
+        if (!moved) {
+            _state.value = _state.value.copy(justMerged = emptySet())
+            return
+        }
 
         addRandom(board)
 

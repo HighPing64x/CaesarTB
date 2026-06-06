@@ -11,8 +11,8 @@ android {
         applicationId = "com.caesar.toolbox"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 4
+        versionName = "1.0.3"
 
         vectorDrawables { useSupportLibrary = true }
     }
@@ -72,6 +72,9 @@ dependencies {
 
     // 核心
     implementation("androidx.core:core-ktx:1.12.0")
+
+    // ZXing 二维码
+    implementation("com.google.zxing:core:3.5.3")
 
     // 调试
     debugImplementation("androidx.compose.ui:ui-tooling")

@@ -1,26 +1,26 @@
 {
-  "versionName": "1.0.1",
-  "versionCode": 2,
+  "versionName": "1.0.3",
+  "versionCode": 4,
   "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/latest",
-  "updateTime": "2026-06-05 22:00",
+  "updateTime": "2026-06-06 23:00",
 
   "changelog": {
     "new": [
-      "新增 测试实验室 模块",
-      "新增 QQNT 风格白/黑双色调主题",
-      "新增 GitHub Pages 启动自动更新检查"
+      "新增 二维码生成工具（输入文字/链接生成QR码）",
+      "新增 域名解析工具（DNS解析、数值地址、6源归属地、WHOIS、Ping）",
+      "新增 6个IP归属地查询源（ip9.com.cn/ip-api.com/ipapi.is/ipwhois.app/ipshudi.com/iplark.com（效果未知））",
+      "新增 加解密工具输入输出栏快捷复制按钮"
     ],
     "changed": [
-      "优化底部导航栏选中图标对比度",
-      "调整应用图标为 QQ 蓝色调",
-      "重构色彩系统，统一白/黑双色风格"
+      "清理移除 4 个占位工具（文本工具/计算器/JSON格式化/待办）",
+      "测试实验室 重命名为 测试模块"
     ],
     "removed": [
-      "移除旧的冷灰青色配色方案"
+      "移除 ip.cn HTML 抓取（已替换为 ip9.com.cn JSON API）"
     ],
     "fixed": [
-      "修复底部导航选中时图标不可见的问题",
-      "修复首次构建缺少 gradlew wrapper 的问题"
+      "修复版本更新检查逻辑（versionCode 数值比较替代字符串比较）",
+      "修复 2048 合并动画卡住不恢复的 bug"
     ]
   }
 }

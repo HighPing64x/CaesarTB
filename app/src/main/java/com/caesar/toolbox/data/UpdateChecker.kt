@@ -49,6 +49,7 @@ object UpdateChecker {
             val obj = JSONObject(json)
 
             val remoteVersion = obj.optString("versionName", "")
+            val remoteCode = obj.optInt("versionCode", 0)
             val downloadUrl = obj.optString("downloadUrl", "")
             val updateTime = obj.optString("updateTime", "")
 
@@ -71,8 +72,7 @@ object UpdateChecker {
                 )
             } else Changelog()
 
-            val hasUpdate = remoteVersion.isNotEmpty() &&
-                    remoteVersion != BuildConfig.VERSION_NAME
+            val hasUpdate = remoteCode > BuildConfig.VERSION_CODE
 
             UpdateInfo(hasUpdate, remoteVersion, downloadUrl.ifEmpty { null }, updateTime, changelog)
         } catch (_: Exception) {

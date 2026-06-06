@@ -34,10 +34,9 @@ data class Tool(
  */
 object ToolRegistry {
     val tools = listOf(
-        // --- 示例工具（后续替换为实际功能） ---
         Tool(
             id = "test_lab",
-            name = "测试实验室",
+            name = "测试模块",
             description = "验证 UI 组件、状态管理与交互逻辑",
             icon = Icons.Outlined.Science,
             category = ToolCategory.UTILITY
@@ -50,48 +49,25 @@ object ToolRegistry {
             category = ToolCategory.UTILITY
         ),
         Tool(
-            id = "placeholder_text",
-            name = "文本工具",
-            description = "编码转换、格式化等文本处理",
-            icon = Icons.Outlined.TextFields,
-            category = ToolCategory.UTILITY
-        ),
-        Tool(
-            id = "placeholder_calc",
-            name = "计算器",
-            description = "进制转换、哈希计算等",
-            icon = Icons.Outlined.Calculate,
-            category = ToolCategory.UTILITY
-        ),
-        Tool(
-            id = "placeholder_json",
-            name = "JSON 格式化",
-            description = "JSON 校验与美化",
-            icon = Icons.Outlined.DataObject,
+            id = "crypto",
+            name = "加解密",
+            description = "Base64 · 凯撒 · 摩斯 · AES · RSA · ECC",
+            icon = Icons.Outlined.Lock,
             category = ToolCategory.DEV
         ),
         Tool(
-            id = "placeholder_qr",
+            id = "qr",
             name = "二维码",
-            description = "生成与扫描二维码",
+            description = "生成二维码并分享",
             icon = Icons.Outlined.QrCode,
             category = ToolCategory.UTILITY
         ),
         Tool(
-            id = "placeholder_todo",
-            name = "待办",
-            description = "轻量待办事项",
-            icon = Icons.Outlined.Checklist,
-            category = ToolCategory.UTILITY,
-            enabled = false
-        ),
-        Tool(
-            id = "placeholder_ping",
-            name = "Ping 工具",
-            description = "网络连通性测试",
-            icon = Icons.Outlined.Wifi,
-            category = ToolCategory.NETWORK,
-            enabled = false
+            id = "dns",
+            name = "域名解析",
+            description = "域名/IP 解析 · 多源归属地 · WHOIS · Ping",
+            icon = Icons.Outlined.Dns,
+            category = ToolCategory.NETWORK
         )
     )
 

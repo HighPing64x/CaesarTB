@@ -116,6 +116,15 @@ fun CaesarTBApp(
                         "game_2048" -> Game2048Screen(
                             onBack = { navController.popBackStack() }
                         )
+                        "crypto" -> CryptoScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                        "qr" -> QrScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                        "dns" -> DnsScreen(
+                            onBack = { navController.popBackStack() }
+                        )
                         else -> ToolDetailScreen(
                             toolId = toolId,
                             onBack = { navController.popBackStack() }

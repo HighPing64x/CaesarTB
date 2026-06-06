@@ -6,25 +6,31 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.caesar.toolbox.BuildConfig
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ChevronRight
+import kotlinx.coroutines.launch
 
 /**
  * 设置页 — 关于 + 后续扩展
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier) {
+fun SettingsScreen(
+    onCheckUpdate: suspend () -> Boolean = { false },
+    modifier: Modifier = Modifier
+) {
+    val scope = rememberCoroutineScope()
+    var isChecking by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = {
@@ -97,8 +103,18 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
             }
 
             item {
-                SettingsItem(label = "检查更新", hint = "通过 GitHub Pages") {
-                    // 手动检查更新由启动时自动处理
+                SettingsItem(
+                    label = "检查更新",
+                    hint = if (isChecking) "检查中…" else "通过 GitHub Pages"
+                ) {
+                    if (!isChecking) {
+                        isChecking = true
+                        scope.launch {
+                            val hasUpdate = onCheckUpdate()
+                            if (!hasUpdate) snackbarHostState.showSnackbar("已是最新版本")
+                            isChecking = false
+                        }
+                    }
                 }
             }
 

@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
 import com.caesar.toolbox.data.UpdateChecker
 import com.caesar.toolbox.ui.theme.CaesarTBTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,14 +15,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             CaesarTBTheme {
                 var updateInfo by remember { mutableStateOf<UpdateChecker.UpdateInfo?>(null) }
-                val scope = rememberCoroutineScope()
 
-                // 启动时自动检查更新
+                // 启动时自动检查
                 LaunchedEffect(Unit) {
-                    scope.launch {
-                        val info = UpdateChecker.check()
-                        if (info.hasUpdate) updateInfo = info
-                    }
+                    val info = UpdateChecker.check()
+                    if (info.hasUpdate) updateInfo = info
                 }
 
                 CaesarTBApp(
@@ -32,6 +28,11 @@ class MainActivity : ComponentActivity() {
                     onDownload = { url ->
                         UpdateChecker.openDownload(this@MainActivity, url)
                         updateInfo = null
+                    },
+                    onCheckUpdate = {
+                        val info = UpdateChecker.check()
+                        if (info.hasUpdate) updateInfo = info
+                        info.hasUpdate
                     }
                 )
             }

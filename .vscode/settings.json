@@ -1,0 +1,11 @@
+{
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.import.gradle.enabled": false,
+  "java.autobuild.enabled": false,
+  "kotlin.languageServer.enabled": false,
+  "problems.decorations.enabled": false,
+  "files.exclude": {
+    "**/.gradle": true,
+    "**/build": true
+  }
+}

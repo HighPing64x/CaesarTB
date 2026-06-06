@@ -30,7 +30,8 @@ import com.caesar.toolbox.ui.screens.*
 fun CaesarTBApp(
     updateInfo: UpdateChecker.UpdateInfo? = null,
     onDismissUpdate: () -> Unit = {},
-    onDownload: (String) -> Unit = {}
+    onDownload: (String) -> Unit = {},
+    onCheckUpdate: suspend () -> Boolean = { false }
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -101,7 +102,7 @@ fun CaesarTBApp(
                     )
                 }
                 composable(BottomNavItem.Settings.route) {
-                    SettingsScreen()
+                    SettingsScreen(onCheckUpdate = onCheckUpdate)
                 }
                 composable(
                     route = Routes.TOOL_DETAIL,

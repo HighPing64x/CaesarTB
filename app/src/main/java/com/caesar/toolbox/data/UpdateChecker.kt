@@ -17,7 +17,6 @@ import java.net.URL
  */
 object UpdateChecker {
 
-    // TODO: 替换为你的 GitHub Pages 地址
     private const val VERSION_URL =
         "https://HighPing64x.github.io/CaesarTB/version.json"
 

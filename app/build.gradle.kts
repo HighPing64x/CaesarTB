@@ -11,8 +11,8 @@ android {
         applicationId = "com.caesar.toolbox"
         minSdk = 26
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.4"
 
         vectorDrawables { useSupportLibrary = true }
     }
@@ -75,6 +75,9 @@ dependencies {
 
     // ZXing 二维码
     implementation("com.google.zxing:core:3.5.3")
+
+    // Coil 图片加载
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // 调试
     debugImplementation("androidx.compose.ui:ui-tooling")

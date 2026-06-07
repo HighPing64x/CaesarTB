@@ -10,9 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.caesar.toolbox.BuildConfig
+import com.caesar.toolbox.data.CrashHandler
 import kotlinx.coroutines.launch
 
 /**
@@ -24,8 +26,11 @@ fun SettingsScreen(
     onCheckUpdate: suspend () -> Boolean = { false },
     modifier: Modifier = Modifier
 ) {
+    val ctx = LocalContext.current
     val scope = rememberCoroutineScope()
     var isChecking by remember { mutableStateOf(false) }
+    var showLogDialog by remember { mutableStateOf(false) }
+    var logContent by remember { mutableStateOf("") }
     val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         modifier = modifier,
@@ -120,7 +125,23 @@ fun SettingsScreen(
 
             item { Spacer(Modifier.height(16.dp)) }
 
-            // --- 预留扩展区 ---
+            // --- 日志 ---
+            item {
+                Text("调试", style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp))
+            }
+            item { SettingsItem(label = "查看日志", hint = "最近200行") {
+                scope.launch {
+                    val logs = CrashHandler.readLogs()
+                    showLogDialog = true; logContent = logs
+                }
+            }}
+            item { SettingsItem(label = "分享日志", hint = "发送给开发者") { CrashHandler.shareLogs(ctx) }}
+            item { SettingsItem(label = "清除日志", hint = "重新开始记录") { CrashHandler.clearLogs() }}
+
+            item { Spacer(Modifier.height(16.dp)) }
+
+            // --- 偏好 ---
             item {
                 Text(
                     "偏好设置",
@@ -143,6 +164,12 @@ fun SettingsScreen(
             }
         }
     }
+
+    if (showLogDialog) AlertDialog(onDismissRequest = { showLogDialog = false },
+        title = { Text("运行日志") },
+        text = { Text(logContent, style = MaterialTheme.typography.bodySmall,
+            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace) },
+        confirmButton = { TextButton(onClick = { showLogDialog = false }) { Text("关闭") } })
 }
 
 @Composable

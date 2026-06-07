@@ -125,6 +125,15 @@ fun CaesarTBApp(
                         "dns" -> DnsScreen(
                             onBack = { navController.popBackStack() }
                         )
+                        "media" -> MediaScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                        "name_gen" -> NameScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                        "steps" -> StepScreen(
+                            onBack = { navController.popBackStack() }
+                        )
                         else -> ToolDetailScreen(
                             toolId = toolId,
                             onBack = { navController.popBackStack() }

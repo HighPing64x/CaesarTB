@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 网络权限（后续功能可能需要） -->
+    <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +14,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.CaesarTB">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".ui.screens.MediaDownloadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
         <activity
             android:name=".MainActivity"

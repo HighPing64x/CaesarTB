@@ -5,12 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
+import com.caesar.toolbox.data.CrashHandler
 import com.caesar.toolbox.data.UpdateChecker
 import com.caesar.toolbox.ui.theme.CaesarTBTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CrashHandler.init(this)
         enableEdgeToEdge()
         setContent {
             CaesarTBTheme {

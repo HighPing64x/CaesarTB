@@ -1,26 +1,29 @@
 {
-  "versionName": "1.0.3",
-  "versionCode": 4,
+  "versionName": "1.0.4",
+  "versionCode": 5,
   "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/latest",
-  "updateTime": "2026-06-06 23:00",
+  "updateTime": "2026-06-06 23:30",
 
   "changelog": {
     "new": [
-      "新增 二维码生成工具（输入文字/链接生成QR码）",
-      "新增 域名解析工具（DNS解析、数值地址、6源归属地、WHOIS、Ping）",
-      "新增 6个IP归属地查询源（ip9.com.cn/ip-api.com/ipapi.is/ipwhois.app/ipshudi.com/iplark.com（效果未知））",
-      "新增 加解密工具输入输出栏快捷复制按钮"
+      "新增 统一视频下载器（B站/抖音/快手/直链）",
+      "B站支持 Dash 音视频分离（m4s+m4a）",
+      "B站画质清晰标注（360P/720P/1080P/4K）",
+      "端内下载（DownloadManager），显示下载进度通知",
+      "文件体积精确显示（MB/KB）"
     ],
     "changed": [
-      "清理移除 4 个占位工具（文本工具/计算器/JSON格式化/待办）",
-      "测试实验室 重命名为 测试模块"
+      "移除抓包工具（代理/VPN模式需要Go后端）",
+      "移除B站独立下载器，合并为多平台统一入口"
     ],
     "removed": [
-      "移除 ip.cn HTML 抓取（已替换为 ip9.com.cn JSON API）"
+      "移除抓包代理/VPN服务（CaptureProxyService/CaptureVpnService）"
     ],
     "fixed": [
-      "修复版本更新检查逻辑（versionCode 数值比较替代字符串比较）",
-      "修复 2048 合并动画卡住不恢复的 bug"
+      "B站下载链接体积显示修复（0B→实际MB）",
+      "B站画质标签修复（数字ID→1080P等描述性文本）",
+      "下载按钮改端内DownloadManager（不再跳浏览器）",
+      "B站封面加载优化"
     ]
   }
 }

@@ -2,6 +2,7 @@ package com.caesar.toolbox.data.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.automirrored.outlined.DirectionsWalk
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -68,6 +69,27 @@ object ToolRegistry {
             description = "域名/IP 解析 · 多源归属地 · WHOIS · Ping",
             icon = Icons.Outlined.Dns,
             category = ToolCategory.NETWORK
+        ),
+        Tool(
+            id = "media",
+            name = "视频下载",
+            description = "B站 · 抖音 · 快手 · 直链 · b23",
+            icon = Icons.Outlined.Videocam,
+            category = ToolCategory.MEDIA
+        ),
+        Tool(
+            id = "name_gen",
+            name = "姓名生成",
+            description = "中文姓名 · 百家姓 · 复姓 · 随机",
+            icon = Icons.Outlined.PersonAdd,
+            category = ToolCategory.UTILITY
+        ),
+        Tool(
+            id = "steps",
+            name = "微信步数",
+            description = "步数展示 · 目标设定 · 手动覆盖",
+            icon = Icons.AutoMirrored.Outlined.DirectionsWalk,
+            category = ToolCategory.UTILITY
         )
     )
 

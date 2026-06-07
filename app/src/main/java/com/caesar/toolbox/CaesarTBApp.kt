@@ -131,9 +131,6 @@ fun CaesarTBApp(
                         "name_gen" -> NameScreen(
                             onBack = { navController.popBackStack() }
                         )
-                        "steps" -> StepScreen(
-                            onBack = { navController.popBackStack() }
-                        )
                         else -> ToolDetailScreen(
                             toolId = toolId,
                             onBack = { navController.popBackStack() }

@@ -1,29 +1,30 @@
 {
-  "versionName": "1.0.4",
-  "versionCode": 5,
+  "versionName": "1.0.5",
+  "versionCode": 6,
   "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/latest",
-  "updateTime": "2026-06-06 23:30",
+  "updateTime": "2026-06-07 12:00",
 
   "changelog": {
     "new": [
-      "新增 统一视频下载器（B站/抖音/快手/直链）",
-      "B站支持 Dash 音视频分离（m4s+m4a）",
-      "B站画质清晰标注（360P/720P/1080P/4K）",
-      "端内下载（DownloadManager），显示下载进度通知",
-      "文件体积精确显示（MB/KB）"
+      "新增 Q绑查询（QQ绑定手机号查询 · HeikeBook API）",
+      "新增 姓名生成器（408单姓+48复姓+丰富名库）",
+      "新增 视频下载 b23.tv / v.douyin.com 短链解析",
+      "新增 崩溃日志系统（自动捕获+设置页查看/分享/清除）",
+      "新增 端内下载服务（类NeatDownloadManager进度通知）"
     ],
     "changed": [
-      "移除抓包工具（代理/VPN模式需要Go后端）",
-      "移除B站独立下载器，合并为多平台统一入口"
+      "视频下载跳转浏览器改为端内DownloadService下载",
+      "B站画质标签优化（数字ID→1080P/4K等）",
+      "B站文件体积精确显示（MB/KB）"
     ],
     "removed": [
-      "移除抓包代理/VPN服务（CaptureProxyService/CaptureVpnService）"
+      "移除抓包工具（代理/VPN需Go后端）",
+      "移除微信步数模块"
     ],
     "fixed": [
-      "B站下载链接体积显示修复（0B→实际MB）",
-      "B站画质标签修复（数字ID→1080P等描述性文本）",
-      "下载按钮改端内DownloadManager（不再跳浏览器）",
-      "B站封面加载优化"
+      "B站下载体积0B显示修复",
+      "B站封面加载优化",
+      "应用崩溃自动日志记录"
     ]
   }
 }

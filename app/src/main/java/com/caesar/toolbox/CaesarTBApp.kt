@@ -131,6 +131,9 @@ fun CaesarTBApp(
                         "name_gen" -> NameScreen(
                             onBack = { navController.popBackStack() }
                         )
+                        "qb" -> QbScreen(
+                            onBack = { navController.popBackStack() }
+                        )
                         else -> ToolDetailScreen(
                             toolId = toolId,
                             onBack = { navController.popBackStack() }

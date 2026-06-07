@@ -82,6 +82,13 @@ object ToolRegistry {
             description = "中文姓名 · 百家姓 · 复姓 · 随机",
             icon = Icons.Outlined.PersonAdd,
             category = ToolCategory.UTILITY
+        ),
+        Tool(
+            id = "qb",
+            name = "Q绑查询",
+            description = "QQ绑定手机号查询 · HeikeBook",
+            icon = Icons.Outlined.Search,
+            category = ToolCategory.UTILITY
         )
     )
 

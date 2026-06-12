@@ -49,6 +49,13 @@ object ToolRegistry {
             category = ToolCategory.UTILITY
         ),
         Tool(
+            id = "three_body",
+            name = "三体运动",
+            description = "三体引力模拟 · 最长稳定时间",
+            icon = Icons.Outlined.BubbleChart,
+            category = ToolCategory.UTILITY
+        ),
+        Tool(
             id = "crypto",
             name = "加解密",
             description = "Base64 · 凯撒 · 摩斯 · AES · RSA · ECC",
@@ -88,7 +95,8 @@ object ToolRegistry {
             name = "Q绑查询",
             description = "QQ绑定手机号查询 · HeikeBook",
             icon = Icons.Outlined.Search,
-            category = ToolCategory.UTILITY
+            category = ToolCategory.UTILITY,
+            enabled = false
         )
     )
 

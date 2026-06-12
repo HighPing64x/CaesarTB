@@ -116,6 +116,9 @@ fun CaesarTBApp(
                         "game_2048" -> Game2048Screen(
                             onBack = { navController.popBackStack() }
                         )
+                        "three_body" -> ThreeBodyScreen(
+                            onBack = { navController.popBackStack() }
+                        )
                         "crypto" -> CryptoScreen(
                             onBack = { navController.popBackStack() }
                         )

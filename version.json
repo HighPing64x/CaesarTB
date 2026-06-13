@@ -1,22 +1,24 @@
 {
-  "versionName": "1.0.7",
-  "versionCode": 8,
+  "versionName": "1.1.0",
+  "versionCode": 9,
   "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/latest",
-  "updateTime": "2026-06-13 12:00",
+  "updateTime": "2026-06-13 18:00",
 
   "changelog": {
     "new": [
-      "新增 贪吃蛇游戏（滑动操控/穿墙/渐加速）",
-      "新增 谷歌小恐龙游戏（跳跃/趴下/仙人掌/飞鸟）",
+      "新增 贪吃蛇游戏（滑动操控/穿墙/渐加速/最高分）",
+      "新增 谷歌小恐龙游戏（跳跃/趴下/仙人掌/飞鸟/渐加速）",
       "新增 三体运动引力模拟（碰撞检测/最长稳定时间）",
+      "新增 资源热更新系统（GitHub Release下载/解压/ResourceLoader）",
       "新增 Q绑查询（已禁用）"
     ],
     "changed": [
-      "二维码增加UTF-8编码提示和纠错级别M",
-      "Q绑查询标记为不可用"
+      "二维码增加UTF-8编码+纠错级别M",
+      "版本号跳至1.1.0"
     ],
     "removed": [
-      "移除微信步数模块"
+      "移除微信步数模块",
+      "移除资源热更新MD5校验"
     ],
     "fixed": []
   }

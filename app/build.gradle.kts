@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+import java.security.MessageDigest
+
 android {
     namespace = "com.caesar.toolbox"
     compileSdk = 34
@@ -11,8 +15,8 @@ android {
         applicationId = "com.caesar.toolbox"
         minSdk = 26
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.0.7"
+        versionCode = 9
+        versionName = "1.1.0"
 
         vectorDrawables { useSupportLibrary = true }
     }
@@ -83,3 +87,40 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+// ===== 资源热更新 ZIP 生成任务 =====
+tasks.register("packageResZip") {
+    group = "caesar"
+    description = "生成热更新资源包 resources.zip"
+    doLast {
+        val resDir = file("src/main/res")
+        val assetsDir = file("src/main/assets")
+        val outputDir = file("build/outputs/res_zip")
+        outputDir.mkdirs()
+        val zipFile = file("$outputDir/resources.zip")
+
+        zipFile.outputStream().use { fos ->
+            ZipOutputStream(fos).use { zos ->
+                // 打包 drawable 图片资源
+                fileTree(resDir).matching { include("drawable*/**") }.forEach { f ->
+                    if (f.isFile) {
+                        val entry = ZipEntry("res/${f.relativeTo(resDir)}")
+                        zos.putNextEntry(entry); f.inputStream().use { it.copyTo(zos) }; zos.closeEntry()
+                    }
+                }
+                // 打包 assets
+                if (assetsDir.exists()) fileTree(assetsDir).forEach { f ->
+                    if (f.isFile) {
+                        val entry = ZipEntry("assets/${f.relativeTo(assetsDir)}")
+                        zos.putNextEntry(entry); f.inputStream().use { it.copyTo(zos) }; zos.closeEntry()
+                    }
+                }
+            }
+        }
+        println("✅ 资源包: ${zipFile.absolutePath}")
+        println("   大小: ${zipFile.length()} bytes")
+    }
+}
+
+// assembleDebug 后自动打包资源
+afterEvaluate { tasks.named("assembleDebug") { finalizedBy("packageResZip") } }

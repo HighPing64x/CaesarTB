@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
 import com.caesar.toolbox.data.CrashHandler
+import com.caesar.toolbox.data.ResourceUpdater
 import com.caesar.toolbox.data.UpdateChecker
 import com.caesar.toolbox.ui.theme.CaesarTBTheme
 
@@ -17,6 +18,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             CaesarTBTheme {
                 var updateInfo by remember { mutableStateOf<UpdateChecker.UpdateInfo?>(null) }
+
+                // 资源热更新
+                LaunchedEffect(Unit) {
+                    val updated = ResourceUpdater.checkAndUpdate(this@MainActivity)
+                    if (updated) CrashHandler.logI("资源热更新成功，重启后生效")
+                }
 
                 // 启动时自动检查
                 LaunchedEffect(Unit) {

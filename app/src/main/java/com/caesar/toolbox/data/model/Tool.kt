@@ -56,6 +56,20 @@ object ToolRegistry {
             category = ToolCategory.UTILITY
         ),
         Tool(
+            id = "snake",
+            name = "贪吃蛇",
+            description = "经典贪吃蛇 · 滑动操控",
+            icon = Icons.Outlined.Gamepad,
+            category = ToolCategory.UTILITY
+        ),
+        Tool(
+            id = "dino",
+            name = "小恐龙",
+            description = "Chrome离线小恐龙 · 跳跃躲避",
+            icon = Icons.Outlined.PestControl,
+            category = ToolCategory.UTILITY
+        ),
+        Tool(
             id = "crypto",
             name = "加解密",
             description = "Base64 · 凯撒 · 摩斯 · AES · RSA · ECC",

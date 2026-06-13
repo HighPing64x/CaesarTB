@@ -1,15 +1,18 @@
 {
-  "versionName": "1.0.6",
-  "versionCode": 7,
+  "versionName": "1.0.7",
+  "versionCode": 8,
   "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/latest",
-  "updateTime": "2026-06-12 12:00",
+  "updateTime": "2026-06-13 12:00",
 
   "changelog": {
     "new": [
-      "新增 三体运动引力模拟（点击放置天体/碰撞检测/最长稳定时间记录）",
-      "新增 Q绑查询（QQ绑定手机号查询）已禁用"
+      "新增 贪吃蛇游戏（滑动操控/穿墙/渐加速）",
+      "新增 谷歌小恐龙游戏（跳跃/趴下/仙人掌/飞鸟）",
+      "新增 三体运动引力模拟（碰撞检测/最长稳定时间）",
+      "新增 Q绑查询（已禁用）"
     ],
     "changed": [
+      "二维码增加UTF-8编码提示和纠错级别M",
       "Q绑查询标记为不可用"
     ],
     "removed": [

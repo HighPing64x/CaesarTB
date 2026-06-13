@@ -119,6 +119,12 @@ fun CaesarTBApp(
                         "three_body" -> ThreeBodyScreen(
                             onBack = { navController.popBackStack() }
                         )
+                        "snake" -> SnakeScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                        "dino" -> DinoScreen(
+                            onBack = { navController.popBackStack() }
+                        )
                         "crypto" -> CryptoScreen(
                             onBack = { navController.popBackStack() }
                         )

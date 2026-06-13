@@ -15,7 +15,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -50,7 +52,8 @@ fun QrScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
                 if (input.isNotBlank()) scope.launch {
                     bitmap = withContext(Dispatchers.Default) {
                         val writer = QRCodeWriter()
-                        val matrix = writer.encode(input, BarcodeFormat.QR_CODE, 512, 512)
+                        val hints = mapOf(EncodeHintType.CHARACTER_SET to "UTF-8", EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.M)
+                        val matrix = writer.encode(input, BarcodeFormat.QR_CODE, 512, 512, hints)
                         val bmp = Bitmap.createBitmap(512, 512, Bitmap.Config.RGB_565)
                         for (x in 0 until 512) for (y in 0 until 512)
                             bmp.setPixel(x, y, if (matrix[x, y]) 0xFF000000.toInt() else 0xFFFFFFFF.toInt())

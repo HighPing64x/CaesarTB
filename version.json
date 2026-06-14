@@ -1,8 +1,8 @@
 {
   "versionName": "1.1.2",
   "versionCode": 11,
-  "downloadUrl": "https://HighPing64x.github.io/CaesarTB/app-debug.apk",
-  "resourcesUrl": "https://HighPing64x.github.io/CaesarTB/resources.zip",
+  "downloadUrl": "https://raw.githubusercontent.com/HighPing64x/CaesarTB/gh-pages/app-debug.apk",
+  "resourcesUrl": "https://raw.githubusercontent.com/HighPing64x/CaesarTB/gh-pages/resources.zip",
   "updateTime": "2026-06-14 13:50",
 
   "changelog": {

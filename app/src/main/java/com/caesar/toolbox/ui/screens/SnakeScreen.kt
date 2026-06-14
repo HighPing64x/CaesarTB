@@ -38,13 +38,15 @@ fun SnakeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     var dir by remember { mutableStateOf(1 to 0) }
     var score by remember { mutableStateOf(0) }
     var over by remember { mutableStateOf(false) }
-    var speed by remember { mutableStateOf(120L) }
+    var speed by remember { mutableStateOf(180L) }
 
     fun randomFood(): Pair<Int,Int> {
         val all = (0 until COLS).flatMap { x -> (0 until ROWS).map { y -> x to y } } - body.toSet()
         return if (all.isEmpty()) 0 to 0 else all[Random.nextInt(all.size)]
     }
-    fun resetGame() { body = initSnake; food = randomFood(); dir = 1 to 0; score = 0; over = false; speed = 120L }
+    fun resetGame() { body = initSnake; food = randomFood(); dir = 1 to 0; score = 0; over = false; speed = 180L }
+
+    var lastDirChange by remember { mutableStateOf(0L) }
 
     LaunchedEffect(over) {
         if (over) {
@@ -55,10 +57,18 @@ fun SnakeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             delay(speed)
             val head = body.first()
             val nh = (head.first + dir.first + COLS) % COLS to (head.second + dir.second + ROWS) % ROWS
-            if (nh in body) { over = true; return@LaunchedEffect }
+            if (nh in body) { over = true; break }
             val ate = nh == food
             body = if (ate) listOf(nh) + body else listOf(nh) + body.dropLast(1)
-            if (ate) { score += 10; food = randomFood(); speed = (speed * 0.97).toLong().coerceAtLeast(50) }
+            if (ate) { score += 10; food = randomFood(); speed = (speed * 0.94).toLong().coerceAtLeast(60) }
+        }
+        // 循环结束后处理结算并保存成绩记录
+        if (over) {
+            if (score > best) { best = score; prefs.edit().putInt("best", best).apply() }
+            try {
+                val entry = "${System.currentTimeMillis()}:\t$score\n"
+                ctx.openFileOutput("snake_scores.txt", Context.MODE_APPEND).use { it.write(entry.toByteArray()) }
+            } catch (_: Exception) {}
         }
     }
 
@@ -76,14 +86,34 @@ fun SnakeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
             Box(Modifier.size(GRID_W.dp, GRID_H.dp).padding(4.dp)
                 .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
                 .pointerInput(Unit) {
-                    var totalX = 0f; var totalY = 0f
-                    detectDragGestures(onDrag = { _, off -> totalX += off.x; totalY += off.y },
-                        onDragEnd = {
-                            val nd = if (kotlin.math.abs(totalX) > kotlin.math.abs(totalY)) (if (totalX > 0) 1 else -1) to 0
-                            else 0 to (if (totalY > 0) 1 else -1)
-                            if (nd.first != -dir.first || nd.second != -dir.second) dir = nd
-                            totalX = 0f; totalY = 0f
-                        })
+                    detectDragGestures(onDrag = { _, offset ->
+                        val now = System.currentTimeMillis()
+                        if (now - lastDirChange < 60) return@detectDragGestures
+                                val nd = if (kotlin.math.abs(offset.x) > kotlin.math.abs(offset.y))
+                                    (if (offset.x > 0) 1 else -1) to 0
+                                else 0 to (if (offset.y > 0) 1 else -1)
+                                // 忽略与当前方向完全相反的输入
+                                if (nd.first == -dir.first && nd.second == -dir.second) return@detectDragGestures
+                                // 预判下一步位置，若会撞到自身或在墙对面造成撞击则判定失败并保存成绩
+                                val head = body.first()
+                                val rawX = head.first + nd.first
+                                val rawY = head.second + nd.second
+                                val nx = (rawX + COLS) % COLS
+                                val ny = (rawY + ROWS) % ROWS
+                                val willGrow = (nx to ny) == food
+                                val tail = body.last()
+                                val collision = (nx to ny) in body && !((nx to ny) == tail && !willGrow)
+                                if (collision) {
+                                    over = true
+                                    // 保存成绩记录
+                                    try {
+                                        val entry = "${System.currentTimeMillis()}:\t$score\n"
+                                        ctx.openFileOutput("snake_scores.txt", Context.MODE_APPEND).use { it.write(entry.toByteArray()) }
+                                    } catch (_: Exception) {}
+                                    return@detectDragGestures
+                                }
+                                dir = nd; lastDirChange = now
+                    })
                 }) {
                 Canvas(Modifier.fillMaxSize()) {
                     val ox = (size.width - GRID_W) / 2; val oy = (size.height - GRID_H) / 2

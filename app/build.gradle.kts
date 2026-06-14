@@ -15,8 +15,8 @@ android {
         applicationId = "com.caesar.toolbox"
         minSdk = 26
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.1.0"
+        versionCode = 11
+        versionName = "1.1.2"
 
         vectorDrawables { useSupportLibrary = true }
     }
@@ -124,3 +124,34 @@ tasks.register("packageResZip") {
 
 // assembleDebug 后自动打包资源
 afterEvaluate { tasks.named("assembleDebug") { finalizedBy("packageResZip") } }
+
+// Sync res_meta.json from version.json so resource package metadata stays up-to-date
+tasks.register("syncResMeta") {
+    group = "caesar"
+    description = "从 version.json 生成 res_meta.json（包含资源包 versionCode 与下载 URL）"
+    doLast {
+        val root = project.rootDir
+        val vfile = file("${root}/version.json")
+        if (!vfile.exists()) {
+            println("version.json not found, skipping syncResMeta")
+            return@doLast
+        }
+        val text = vfile.readText()
+        val nameMatch = Regex("\"versionName\"\\s*:\\s*\"([^\"]+)\"").find(text)
+        val codeMatch = Regex("\"versionCode\"\\s*:\\s*(\\d+)").find(text)
+        val vName = nameMatch?.groupValues?.get(1) ?: ""
+        val vCode = codeMatch?.groupValues?.get(1)?.toIntOrNull() ?: 0
+        val downloadBase = "https://github.com/HighPing64x/CaesarTB/releases/download/v${vName}/resources.zip"
+        val outText = "{" + System.lineSeparator() +
+            "  \"resource\": {" + System.lineSeparator() +
+            "    \"versionCode\": $vCode," + System.lineSeparator() +
+            "    \"url\": \"$downloadBase\"" + System.lineSeparator() +
+            "  }" + System.lineSeparator() +
+            "}"
+        val outFile = file("${root}/res_meta.json")
+        outFile.writeText(outText)
+        println("✅ res_meta.json updated: ${outFile.absolutePath}")
+    }
+}
+
+afterEvaluate { tasks.named("packageResZip") { finalizedBy("syncResMeta") } }

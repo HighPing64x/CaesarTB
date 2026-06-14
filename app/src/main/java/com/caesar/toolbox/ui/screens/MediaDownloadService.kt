@@ -85,15 +85,13 @@ class MediaDownloadService : Service() {
                 putExtra("url", url); putExtra("name", name)
                 putExtra("headers", headers.entries.joinToString("|") { "${it.key}:${it.value}" })
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) ctx.startForegroundService(intent)
-            else ctx.startService(intent)
+            ctx.startForegroundService(intent)
             Toast.makeText(ctx, "开始下载: $name", Toast.LENGTH_SHORT).show()
         }
 
         fun createChannel(ctx: Context) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                (ctx.getSystemService(NotificationManager::class.java)).createNotificationChannel(
-                    NotificationChannel(CHANNEL, "媒体下载", NotificationManager.IMPORTANCE_LOW))
+            (ctx.getSystemService(NotificationManager::class.java)).createNotificationChannel(
+                NotificationChannel(CHANNEL, "媒体下载", NotificationManager.IMPORTANCE_LOW))
         }
     }
 }

@@ -1,25 +1,27 @@
 {
-  "versionName": "1.1.0",
-  "versionCode": 9,
-  "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/latest",
-  "updateTime": "2026-06-13 18:00",
+  "versionName": "1.1.2",
+  "versionCode": 11,
+  "downloadUrl": "https://github.com/HighPing64x/CaesarTB/releases/tag/v1.1.2",
+  "updateTime": "2026-06-14 09:30",
 
   "changelog": {
     "new": [
-      "新增 贪吃蛇游戏（滑动操控/穿墙/渐加速/最高分）",
-      "新增 谷歌小恐龙游戏（跳跃/趴下/仙人掌/飞鸟/渐加速）",
-      "新增 三体运动引力模拟（碰撞检测/最长稳定时间）",
-      "新增 资源热更新系统（GitHub Release下载/解压/ResourceLoader）",
-      "新增 Q绑查询（已禁用）"
+      "新增 三体运动回放播放器（可选择回放文件并回放帧序列）",
+      "新增 三体运动回放保存选项（SharedPreferences 键: save_replay），回放文件保存在应用私有存储",
+      "新增 小恐龙自定义模式（跳跃力度/重力/仙人掌基高/得分倍率 可调）"
     ],
     "changed": [
-      "二维码增加UTF-8编码+纠错级别M",
-      "版本号跳至1.1.0"
+      "调整 小恐龙 跳跃物理参数，降低卡顿并提升跳跃响应",
+      "三体运动：放置逻辑改为仅在按下事件触发，避免初始天体重合导致立即碰撞结束",
+      "贪吃蛇：修复反向滑动导致瞬间自撞卡死的方向判定逻辑"
     ],
     "removed": [
-      "移除微信步数模块",
-      "移除资源热更新MD5校验"
+      "无"
     ],
-    "fixed": []
+    "fixed": [
+      "修复 三体运动 初始天体重合并添加回放保存",
+      "修复 贪吃蛇 方向反向输入导致卡死的问题",
+      "修复 小恐龙 跳跃卡顿并添加自定义难度设置"
+    ]
   }
 }

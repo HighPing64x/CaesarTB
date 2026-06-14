@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    onCheckUpdate: suspend () -> Boolean = { false },
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCheckUpdate: suspend () -> Boolean = { false }
 ) {
     val ctx = LocalContext.current
     val scope = rememberCoroutineScope()

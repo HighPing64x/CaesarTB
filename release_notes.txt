@@ -1,0 +1,8 @@
+﻿Release v1.1.2
+
+Changelog:
+- See version.json changelog
+
+Assets:
+- app-debug.apk
+- resources.zip
